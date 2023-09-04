@@ -1,19 +1,53 @@
 const currentPath = window.location.pathname;
 
+async function displayPopularMovies() {
+  const { results } = await fetchData("movie/popular");
+  console.log(results);
+
+  results.forEach((movie) => {
+    const div = document.createElement("div");
+    div.classList.add("card");
+    div.innerHTML = `
+          <a href="movie-details.html?id=${movie.id}">
+         ${
+           movie.poster_path
+             ? ` <img
+               src=https://image.tmdb.org/t/p/w500/${movie.poster_path}
+               class="card-img-top"
+               alt=${movie.title}
+             />`
+             : `<img
+               src="https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png"
+               class="card-img-top"
+               alt=${movie.title}
+             />`
+         }
+          </a>
+          <div class="card-body">
+          <h5 class="card-title">${movie.title}</h5>
+          <p class="card-text">
+          <small class="text-muted">Release: ${movie.release_date}</small>
+          </p>
+          </div>
+          `;
+
+    document.querySelector("#popular-movies").appendChild(div);
+  });
+}
+
 // FUN for Fetch data from TMDB API
 
-async function fetchData(endPoint = "movie/popular") {
+async function fetchData(endPoint) {
   const API_KEY = "d22d98fd43210ef8f253f6b8d4d44d03";
-  const API_URL = "https://api.themoviedb.org/3";
+  const API_URL = "https://api.themoviedb.org/3/";
 
   const response = await fetch(
-    `${API_URL}/${endPoint}?api_key=${API_KEY}&language=en-US`
+    `${API_URL}${endPoint}?api_key=${API_KEY}&language=en-US`
   );
 
   const data = await response.json();
-  console.log("🚀 ~ file: script.js:19 ~ fetchData ~ response:", response);
+  return data;
 }
-fetchData();
 
 //  Highlight active link
 
@@ -33,6 +67,7 @@ function init() {
     case "/":
     case "/index.html":
       console.log("Home");
+      displayPopularMovies();
       break;
 
     case "/tv-details.html":
@@ -44,7 +79,7 @@ function init() {
       break;
 
     case "/search.html":
-      console.log("Shows");
+      console.log("search");
       break;
 
     case "/movie-details.html":
