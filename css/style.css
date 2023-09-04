@@ -221,7 +221,9 @@ section h2 {
   justify-content: space-between;
   align-items: center;
   margin: 50px 0 30px;
+  
 }
+
 
 .details-top img {
   width: 400px;
@@ -238,8 +240,7 @@ section h2 {
   margin-top: 20px;
 }
 
-.details-bottom {
-}
+.details-bottom {}
 
 .details-bottom li {
   margin: 15px 0;
@@ -340,4 +341,21 @@ section h2 {
 
 .alert-error {
   background: red;
+}
+
+@media(max-width:430px) {
+  .details-top {
+    flex-wrap: wrap;
+  }
+
+  .details-top img {
+    width: 350px;
+  }
+}
+
+@media(max-width:350px) {
+
+  .details-top img {
+    width: 290px;
+  }
 }
