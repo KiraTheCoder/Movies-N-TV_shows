@@ -48,7 +48,6 @@ function displayBackgroundImage(type, backdrop_path) {
     document.querySelector("#movie-details").appendChild(overlayDiv);
   } else {
     document.querySelector("#show-details").appendChild(overlayDiv);
-
   }
 }
 
@@ -210,77 +209,81 @@ async function showMovieDetails() {
             .join(", ")}</div>
 `;
 
-  document.querySelector("#show-details").appendChild(div);
+  document.querySelector("#movie-details").appendChild(div);
 }
 
-// async function showShowDetails() {
-//   const id = window.location.search.split("=")[1];
-//   const movie = await fetchData(`/movie/${id}`);
+async function showShowDetails() {
+  const id = window.location.search.split("=")[1];
+  const show = await fetchData(`/tv/${id}`);
 
-//   displayBackgroundImage("movie", movie.backdrop_path);
-//   const div = document.createElement("div");
-//   div.innerHTML = `
-//   <div class="details-top">
-//   <div>
-//   ${
-//     movie.poster_path
-//       ? ` <img
-//         src=https://image.tmdb.org/t/p/w500/${movie.poster_path}
-//         class="card-img-top"
-//         alt=${movie.title}
-//       />`
-//       : `<img
-//       src="../images/no-image.jpg"
-//         class="card-img-top"
-//         alt=${movie.title}
-//       />`
-//   }
-//           </div>
-//           <div>
-//             <h2>${movie.title}</h2>
-//             <p>
-//               <i class="fas fa-star text-primary"></i>
-//               ${movie.vote_average.toFixed(1)} / 10
-//             </p>
-//             <p class="text-muted">Release Date: ${DateFormat(
-//               movie.release_date
-//             )}</p>
-//             <p>
-//              ${movie.overview}
-//             </p>
-//             <h5>Genres</h5>
-//             <ul class="list-group">
-//              ${movie.genres.map((genre) => `<li>${genre.name}</li>`).join(" ")}
-//             </ul>
-//             <a href=${
-//               movie.homepage
-//             } target="_blank" class="btn">Visit Movie Homepage</a>
-//           </div>
-//         </div>
-//         </div>
-//         <div class="details-bottom">
-//           <h2>Movie Info</h2>
-//           <ul>
-//             <li><span class="text-secondary">Budget:</span> $${addCommasToNumber(
-//               movie.budget
-//             )}</li>
-//             <li><span class="text-secondary">Revenue:</span> $${addCommasToNumber(
-//               movie.revenue
-//             )}</li>
-//             <li><span class="text-secondary">Runtime:</span> 90 minutes</li>
-//             <li><span class="text-secondary">Status:</span> ${addCommasToNumber(
-//               movie.runtime
-//             )}</li>
-//           </ul>
-//           <h4>Production Companies</h4>
-//           <div class="list-group">${movie.production_companies
-//             .map((company) => company.name)
-//             .join(", ")}</div>
-// `;
+  console.log("🚀 ~ file: script.js:220 ~ showShowDetails ~ show:", show);
+  displayBackgroundImage("show", show.backdrop_path);
+  const div = document.createElement("div");
+  div.innerHTML = `
+  <div class="details-top">
+  <div>
+  ${
+    show.poster_path
+      ? ` <img
+        src=https://image.tmdb.org/t/p/w500/${show.poster_path}
+        class="card-img-top"
+        alt=${show.name}
+      />`
+      : `<img
+      src="../images/no-image.jpg"
+        class="card-img-top"
+        alt=${show.name}
+      />`
+  }
+          </div>
+          <div>
+            <h2>${show.name}</h2>
+            <p>
+              <i class="fas fa-star text-primary"></i>
+              ${show.vote_average.toFixed(1)} / 10
+            </p>
+            <p class="text-muted">Release Date: ${DateFormat(
+              show.last_air_date
+            )}</p>
+            <p>
+             ${show.overview}
+            </p>
+            <h5>Genres</h5>
+            <ul class="list-group">
+             ${show.genres.map((genre) => `<li>${genre.name}</li>`).join(" ")}
+            </ul>
+            <a href=${
+              show.homepage
+            } target="_blank" class="btn">Visit show Homepage</a>
+          </div>
+        </div>
+        </div>
 
-//   document.querySelector("#show-details").appendChild(div);
-// }
 
+        <div class="details-bottom">
+          <h2>show Info</h2>
+          <ul>
+            <li><span class="text-secondary">Number Of Episode:</span> 
+            ${show.number_of_episodes}
+            </li>
+            <li><span class="text-secondary">Last Episode To Air:</span> 
+            ${show.last_episode_to_air.name}
+            </li>
+
+            <li><span class="text-secondary">Status:</span> ${addCommasToNumber(
+              show.status
+            )}</li>
+          </ul>
+          <h4>Production Companies</h4>
+          <div class="list-group">${show.production_companies
+            .map((company) => company.name)
+            .join(", ")}</div>
+`;
+
+  document
+    .querySelector("#show-details")
+    .appendChild(div);
+}
 
 function init() {
   switch (currentPath) {
@@ -289,8 +292,8 @@ function init() {
       displayPopularMovies();
       break;
 
-    case "/tv-details.html":
-      showShowDetails;
+    case "/show-details.html":
+      showShowDetails();
       break;
 
     case "/shows.html":
