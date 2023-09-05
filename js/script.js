@@ -102,8 +102,54 @@ async function displayPopularMovies() {
           `;
 
     document.querySelector("#popular-movies").appendChild(div);
+    initSlider()
   });
 }
+function initSlider()
+{const swiper = new Swiper(".swiper",{
+  spaceBetween:30,
+  slidesPerView:1,
+  freeMode:true,
+  loop:true,
+  autoplay:{
+    delay:4000,
+    disableOnInteraction:false,
+  },
+  breakpoints:{
+    500:{
+      slidesPerView:2
+    },
+    700:{
+      slidesPerView:3
+    },
+    1200:{
+      slidesPerView:4
+    },
+    1500:{
+      slidesPerView:6
+    }
+  }
+})}
+async function displaySwiper() {
+  const { results } = await fetchData("movie/now_playing");
+  const swiperWrapper = document.querySelector(".swiper-wrapper");
+
+  results.forEach((movie) => {
+    const div = document.createElement("div");
+    div.classList.add("swiper-slide");
+    div.innerHTML = ` 
+    <a href="movie-details.html?id=${movie.id}">
+    <img  src=https://image.tmdb.org/t/p/w500/${movie.poster_path} 
+    alt=${movie.title} />
+    </a>
+    <h4 class="swiper-rating">
+    <i class="fas fa-star text-secondary"></i> ${movie.vote_average} / 10
+    </h4>
+    `;
+    swiperWrapper.appendChild(div);
+  });
+}
+displaySwiper();
 
 // Display popular TV shows
 
@@ -280,9 +326,7 @@ async function showShowDetails() {
             .join(", ")}</div>
 `;
 
-  document
-    .querySelector("#show-details")
-    .appendChild(div);
+  document.querySelector("#show-details").appendChild(div);
 }
 
 function init() {
