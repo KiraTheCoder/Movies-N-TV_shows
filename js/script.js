@@ -4,6 +4,7 @@ const global = {
     term: "",
     type: "",
     page: 1,
+    totalResults: "",
     totalPages: "",
   },
   api: {
@@ -100,7 +101,7 @@ async function searchAPIData() {
 
   showSpinner();
   const response = await fetch(
-    `${API_URL}search/${global.search.type}?api_key=${API_KEY}&language=en-US&query=${global.search.term}&include_adult=false`
+    `${API_URL}search/${global.search.type}?api_key=${API_KEY}&language=en-US&query=${global.search.term}&page=${global.search.page}`
   );
 
   const data = await response.json();
@@ -195,6 +196,8 @@ displaySwiper();
 // Searched Movies and Tv Shows add to DOM
 
 function displaySearchResults(results) {
+  // clear previous results
+  document.querySelector("#search-results").innerHTML = "";
   results.forEach((result) => {
     const div = document.createElement("div");
     div.classList.add("card");
@@ -229,7 +232,9 @@ function displaySearchResults(results) {
           </p>
           </div>
           `;
-
+    displayPagination(); 
+    document.querySelector("#search-results-heading").innerHTML = `
+          <h2>${results.length} of ${global.search.totalResults} for ${global.search.term}`;
     document.querySelector("#search-results").appendChild(div);
   });
 }
@@ -242,18 +247,61 @@ async function search() {
   global.search.term = urlParams.get("search-term");
   if (global.search.term !== "" && global.search.term !== null) {
     // make request and display results
-    const { page, results, total_pages } = await searchAPIData();
+    const { page, results, total_pages, total_results } = await searchAPIData();
+
+    global.search.page = page;
+    global.search.totalPages = total_pages;
+    global.search.totalResults = total_results;
 
     if (results.length === 0) {
       showAlert("No result found");
       return;
     }
-
     displaySearchResults(results);
     document.querySelector("#search-term").value = "";
   } else {
     showAlert("Please enter input in search box");
   }
+}
+
+// pagination for Search
+
+function displayPagination() {
+  // clear previous results
+  document.querySelector("#pagination").innerHTML = "";
+  const div = document.createElement("div");
+  div.style.display = "pagination";
+  div.innerHTML = `
+          <button class="btn btn-primary" id="prev">Prev</button>
+          <button class="btn btn-primary" id="next">Next</button>
+          <div class="page-counter">${global.search.page}  of ${global.search.totalPages}</div>
+  `;
+
+  document.querySelector("#pagination").appendChild(div);
+
+  const prevBtn = document.querySelector("#prev");
+  if (global.search.page < 2) {
+    prevBtn.style.display = "none";
+  } else {
+    prevBtn.style.display = "block";
+  }
+  prevBtn.addEventListener("click", async () => {
+    const { results } = await searchAPIData();
+    global.search.page--;
+    displaySearchResults(results);
+  });
+
+  const nextBtn = document.querySelector("#next");
+  if (global.search.page >= global.search.totalPages) {
+    nextBtn.style.display = "none";
+  } else {
+    nextBtn.style.display = "block";
+  }
+  nextBtn.addEventListener("click", async () => {
+    global.search.page++;
+    const { results } = await searchAPIData();
+    displaySearchResults(results);
+  });
 }
 
 // Display popular TV shows
