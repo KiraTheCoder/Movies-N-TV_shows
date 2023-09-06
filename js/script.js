@@ -283,7 +283,7 @@ function displayPagination() {
   if (global.search.page < 2) {
     prevBtn.style.display = "none";
   } else {
-    prevBtn.style.display = "block";
+    prevBtn.style.display = "inner-block";
   }
   prevBtn.addEventListener("click", async () => {
     const { results } = await searchAPIData();
@@ -295,7 +295,7 @@ function displayPagination() {
   if (global.search.page >= global.search.totalPages) {
     nextBtn.style.display = "none";
   } else {
-    nextBtn.style.display = "block";
+    nextBtn.style.display = "inner-block";
   }
   nextBtn.addEventListener("click", async () => {
     global.search.page++;
@@ -312,7 +312,7 @@ async function displayPopularShows() {
     const div = document.createElement("div");
     div.classList.add("card");
     div.innerHTML = `
-    <a href="show-details.html?id=${show.id}">
+    <a href="tv-details.html?id=${show.id}">
     ${
       show.poster_path
         ? ` <img
@@ -486,7 +486,7 @@ function init() {
       displayPopularMovies();
       break;
 
-    case "/show-details.html":
+    case "/tv-details.html":
       showShowDetails();
       break;
 
