@@ -198,7 +198,6 @@ function initSlider() {
 }
 async function displaySwiper() {
   const { results } = await fetchData("movie/now_playing");
-  const swiperWrapper = document.querySelector(".swiper-wrapper");
 
   results.forEach((movie) => {
     const div = document.createElement("div");
@@ -214,8 +213,8 @@ async function displaySwiper() {
     <i class="fas fa-star text-secondary"></i> ${movie.vote_average} / 10
     </h4>
     `;
-    swiperWrapper.appendChild(div);
-  });
+    document.querySelector(".swiper-wrapper").appendChild(div);
+  });I
 }
 displaySwiper();
 
