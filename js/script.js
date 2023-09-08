@@ -179,6 +179,8 @@ async function displaySwiper() {
   results.forEach((movie) => {
     const div = document.createElement("div");
     div.classList.add("swiper-slide");
+    div.style.boxShadow =
+      "0 19px 38px rgba(0,0,0,0.35), 0 15px 12px rgba(0,0,0,0.28)";
     div.innerHTML = ` 
     <a href="movie-details.html?id=${movie.id}">
     <img  src=https://image.tmdb.org/t/p/w500/${movie.poster_path} 
@@ -232,7 +234,7 @@ function displaySearchResults(results) {
           </p>
           </div>
           `;
-    displayPagination(); 
+    displayPagination();
     document.querySelector("#search-results-heading").innerHTML = `
           <h2>${results.length} of ${global.search.totalResults} for ${global.search.term}`;
     document.querySelector("#search-results").appendChild(div);

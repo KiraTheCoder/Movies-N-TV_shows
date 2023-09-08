@@ -182,6 +182,7 @@ section.now-playing {
   background: url(../images/showcase-bg.jpg) no-repeat center center/cover;
 }
 
+
 section h2 {
   margin: 20px 0;
   text-align: center;
@@ -221,7 +222,7 @@ section h2 {
   justify-content: space-between;
   align-items: center;
   margin: 50px 0 30px;
-  
+
 }
 
 
@@ -240,7 +241,6 @@ section h2 {
   margin-top: 20px;
 }
 
-.details-bottom {}
 
 .details-bottom li {
   margin: 15px 0;
