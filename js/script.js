@@ -7,6 +7,10 @@ const global = {
     totalResults: "",
     totalPages: "",
   },
+  pages: {
+    current: 1,
+    total: "",
+  },
   api: {
     apiKey: "d22d98fd43210ef8f253f6b8d4d44d03",
     apiUrl: "https://api.themoviedb.org/3/",
@@ -85,7 +89,7 @@ async function fetchData(endPoint) {
 
   showSpinner();
   const response = await fetch(
-    `${API_URL}${endPoint}?api_key=${API_KEY}&language=en-US`
+    `${API_URL}${endPoint}?api_key=${API_KEY}&language=en-US&page=${global.pages.current}`
   );
 
   const data = await response.json();
@@ -109,9 +113,29 @@ async function searchAPIData() {
 
   return data;
 }
+
+//  pagination for Movies and TV Shows
+
+let scrollCount = 0;
+window.onwheel = (e) => {
+  if (e.deltaY >= 0) {
+    // scrolling
+    scrollCount++;
+    if (scrollCount >= 15) {
+      scrollCount = 0;
+      global.pages.current++;
+      if (global.currentPath == "/shows.html") displayPopularShows();
+
+      if (global.currentPath == "/" || "/index.html") displayPopularMovies();
+    }
+  }
+};
+
 // Display movies
 async function displayPopularMovies() {
-  const { results } = await fetchData("movie/popular");
+  const { page, results, total_pages } = await fetchData("movie/popular");
+  global.pages.current = page;
+  global.pages.total = total_pages;
 
   results.forEach((movie) => {
     const div = document.createElement("div");
@@ -195,6 +219,46 @@ async function displaySwiper() {
 }
 displaySwiper();
 
+// pagination for Search
+
+function displayPagination() {
+  // clear previous results
+  document.querySelector("#pagination").innerHTML = "";
+  const div = document.createElement("div");
+  div.style.display = "pagination";
+  div.innerHTML = `
+          <button class="btn btn-primary" id="prev">Prev</button>
+          <button class="btn btn-primary" id="next">Next</button>
+          <div class="page-counter">${global.search.page}  of ${global.search.totalPages}</div>
+  `;
+
+  document.querySelector("#pagination").appendChild(div);
+
+  const prevBtn = document.querySelector("#prev");
+  if (global.search.page < 2) {
+    prevBtn.style.display = "none";
+  } else {
+    prevBtn.style.display = "inner-block";
+  }
+  prevBtn.addEventListener("click", async () => {
+    const { results } = await searchAPIData();
+    global.search.page--;
+    displaySearchResults(results);
+  });
+
+  const nextBtn = document.querySelector("#next");
+  if (global.search.page >= global.search.totalPages) {
+    nextBtn.style.display = "none";
+  } else {
+    nextBtn.style.display = "inner-block";
+  }
+  nextBtn.addEventListener("click", async () => {
+    global.search.page++;
+    const { results } = await searchAPIData();
+    displaySearchResults(results);
+  });
+}
+
 // Searched Movies and Tv Shows add to DOM
 
 function displaySearchResults(results) {
@@ -266,50 +330,12 @@ async function search() {
   }
 }
 
-// pagination for Search
-
-function displayPagination() {
-  // clear previous results
-  document.querySelector("#pagination").innerHTML = "";
-  const div = document.createElement("div");
-  div.style.display = "pagination";
-  div.innerHTML = `
-          <button class="btn btn-primary" id="prev">Prev</button>
-          <button class="btn btn-primary" id="next">Next</button>
-          <div class="page-counter">${global.search.page}  of ${global.search.totalPages}</div>
-  `;
-
-  document.querySelector("#pagination").appendChild(div);
-
-  const prevBtn = document.querySelector("#prev");
-  if (global.search.page < 2) {
-    prevBtn.style.display = "none";
-  } else {
-    prevBtn.style.display = "inner-block";
-  }
-  prevBtn.addEventListener("click", async () => {
-    const { results } = await searchAPIData();
-    global.search.page--;
-    displaySearchResults(results);
-  });
-
-  const nextBtn = document.querySelector("#next");
-  if (global.search.page >= global.search.totalPages) {
-    nextBtn.style.display = "none";
-  } else {
-    nextBtn.style.display = "inner-block";
-  }
-  nextBtn.addEventListener("click", async () => {
-    global.search.page++;
-    const { results } = await searchAPIData();
-    displaySearchResults(results);
-  });
-}
-
 // Display popular TV shows
 
 async function displayPopularShows() {
-  const { results } = await fetchData("tv/popular");
+  const { page, results, total_pages } = await fetchData("tv/popular");
+  global.pages.current = page;
+  global.pages.total = total_pages;
   results.forEach((show) => {
     const div = document.createElement("div");
     div.classList.add("card");
