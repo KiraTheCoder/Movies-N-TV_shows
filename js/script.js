@@ -510,22 +510,23 @@ function init() {
   switch (global.currentPath) {
     case "/":
     case "/index.html":
+    case "/Movies__-__TV_shows/":
       displayPopularMovies();
       break;
 
-    case "/tv-details.html":
+    case "/Movies__-__TV_shows//tv-details.html":
       showShowDetails();
       break;
 
-    case "/shows.html":
+    case "/Movies__-__TV_shows//shows.html":
       displayPopularShows();
       break;
 
-    case "/search.html":
+    case "/Movies__-__TV_shows//search.html":
       search();
       break;
 
-    case "/movie-details.html":
+    case "/Movies__-__TV_shows//movie-details.html":
       showMovieDetails();
       break;
   }
