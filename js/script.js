@@ -125,9 +125,9 @@ window.onwheel = (e) => {
     if (scrollCount >= 15) {
       scrollCount = 0;
       global.pages.current++;
-      if (global.currentPath == `${rootPath}/shows.html`) displayPopularShows();
+      if (global.currentPath == `${global.rootPath}/shows.html`) displayPopularShows();
 
-      if (global.currentPath == `${rootPath}/` || `${rootPath}/index.html`)
+      if (global.currentPath == `${global.rootPath}/` || `${global.rootPath}/index.html`)
         displayPopularMovies();
     }
   }
@@ -143,7 +143,7 @@ async function displayPopularMovies() {
     const div = document.createElement("div");
     div.classList.add("card");
     div.innerHTML = `
-          <a href="${rootPath}/movie-details.html?id=${movie.id}">
+          <a href="${global.rootPath}/movie-details.html?id=${movie.id}">
          ${
            movie.poster_path
              ? ` <img
@@ -269,7 +269,7 @@ function displaySearchResults(results) {
     const div = document.createElement("div");
     div.classList.add("card");
     div.innerHTML = `
-    <a href=${rootPath}/${global.search.type}-details.html?id=${result.id}>
+    <a href=${global.rootPath}/${global.search.type}-details.html?id=${result.id}>
     ${
       result.poster_path
         ? ` <img
@@ -341,7 +341,7 @@ async function displayPopularShows() {
     const div = document.createElement("div");
     div.classList.add("card");
     div.innerHTML = `
-    <a href="${rootPath}/tv-details.html?id=${show.id}">
+    <a href="${global.rootPath}/tv-details.html?id=${show.id}">
     ${
       show.poster_path
         ? ` <img
@@ -511,24 +511,24 @@ async function showShowDetails() {
 function init() {
   switch (global.currentPath) {
     case "/":
-    case `${rootPath}/`:
-    case `${rootPath}/index.html`:
+    case `${global.rootPath}/`:
+    case `${global.rootPath}/index.html`:
       displayPopularMovies();
       break;
 
-    case `${rootPath}/tv-details.html`:
+    case `${global.rootPath}/tv-details.html`:
       showShowDetails();
       break;
 
-    case `${rootPath}/shows.html`:
+    case `${global.rootPath}/shows.html`:
       displayPopularShows();
       break;
 
-    case `${rootPath}/search.html`:
+    case `${global.rootPath}/search.html`:
       search();
       break;
 
-    case `${rootPath}/movie-details.html`:
+    case `${global.rootPath}/movie-details.html`:
       showMovieDetails();
       break;
   }
