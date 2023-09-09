@@ -509,23 +509,23 @@ async function showShowDetails() {
 function init() {
   switch (global.currentPath) {
     case "/":
-    case "/Movies__N__TV_shows/index.html":
+    case "/index.html":
       displayPopularMovies();
       break;
 
-    case "/Movies__N__TV_shows/tv-details.html":
+    case "/tv-details.html":
       showShowDetails();
       break;
 
-    case "/Movies__N__TV_shows/shows.html":
+    case "/shows.html":
       displayPopularShows();
       break;
 
-    case "/Movies__N__TV_shows/search.html":
+    case "/search.html":
       search();
       break;
 
-    case "/Movies__N__TV_shows/movie-details.html":
+    case "/movie-details.html":
       showMovieDetails();
       break;
   }
