@@ -214,7 +214,7 @@ async function displaySwiper() {
     </h4>
     `;
     document.querySelector(".swiper-wrapper").appendChild(div);
-  });I
+  });
 }
 displaySwiper();
 
