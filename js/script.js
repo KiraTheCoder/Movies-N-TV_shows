@@ -510,25 +510,24 @@ async function showShowDetails() {
 
 function init() {
   switch (global.currentPath) {
-    case "/":
-    case "/index.html":
-    case "/Movies__-__TV_shows/":
+    case `${rootPath}/`:
+    case `${rootPath}/index.html`:
       displayPopularMovies();
       break;
 
-    case "/Movies__-__TV_shows//tv-details.html":
+    case `${rootPath}/tv-details.html`:
       showShowDetails();
       break;
 
-    case "/Movies__-__TV_shows//shows.html":
+    case `${rootPath}/shows.html`:
       displayPopularShows();
       break;
 
-    case "/Movies__-__TV_shows//search.html":
+    case `${rootPath}/search.html`:
       search();
       break;
 
-    case "/Movies__-__TV_shows//movie-details.html":
+    case `${rootPath}/movie-details.html`:
       showMovieDetails();
       break;
   }
