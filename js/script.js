@@ -510,6 +510,7 @@ async function showShowDetails() {
 
 function init() {
   switch (global.currentPath) {
+    case "/":
     case `${rootPath}/`:
     case `${rootPath}/index.html`:
       displayPopularMovies();
