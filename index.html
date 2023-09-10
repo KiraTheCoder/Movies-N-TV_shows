@@ -15,25 +15,44 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/spinner.css" />
     <script src="lib/swiper.js"></script>
-    <script src="js/script.js" defer></script>
+    <script type="module" src="js/app.js" defer></script>
     <title>M&T</title>
   </head>
   <body>
+    <!-- For GitHub -->
     <header class="main-header">
       <div class="container">
-        <div class="logo"><a href="/Movies__-__TV_shows/">M&T</a></div>
+        <div class="logo"><a href="/Movies-N-TV_shows/">M&T</a></div>
         <nav>
           <ul>
             <li>
-              <a class="nav-link" href="/Movies__-__TV_shows/">Movies</a>
+              <a class="nav-link" href="/Movies-N-TV_shows/">Movies</a>
             </li>
             <li>
-              <a class="nav-link" href="/Movies__-__TV_shows/shows.html">TV Shows</a>
+              <a class="nav-link" href="/Movies-N-TV_shows/shows.html">TV Shows</a>
             </li>
           </ul>
         </nav>
       </div>
     </header>
+
+    <!-- For Local Env -->
+
+    <!-- <header class="main-header">
+      <div class="container">
+        <div class="logo"><a href="/">M&T</a></div>
+        <nav>
+          <ul>
+            <li>
+              <a class="nav-link" href="/">Movies</a>
+            </li>
+            <li>
+              <a class="nav-link" href="/shows.html">TV Shows</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header> -->
 
     <!-- Now Playing Section -->
     <section class="now-playing">
@@ -47,7 +66,10 @@
     <section class="search">
       <div class="container">
         <div id="alert"></div>
-        <form action="/Movies__-__TV_shows/search.html" class="search-form">
+        <!-- For Local Env -->
+        <form action="/search.html" class="search-form">
+          <!-- for GitHub -->
+          <!-- <form action="/Movies-N-TV_shows/search.html" class="search-form"> -->
           <!-- movies and shows radio box -->
           <div class="search-radio">
             <input type="radio" id="movie" name="type" value="movie" checked />
