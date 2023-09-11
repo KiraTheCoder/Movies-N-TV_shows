@@ -8,4 +8,4 @@
 - Responsive
 - Pagination
 - Data Fetch from API
-- page Routes
+- Page Routes
