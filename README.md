@@ -2,7 +2,9 @@
 - This simple Movies and TV shows site.
 - Showing popular movies and Tv shows.
 - One can search their favorite Movies and Tv shows.
---
+
+-------------------------------------------------------
+
 ## Developing using HTML CSS and Vanilla JS
 ### Features
 - Responsive
